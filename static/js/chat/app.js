@@ -160,11 +160,16 @@ var ChatApp = (function($, Backbone, _) {
   };
 
   ChatApp.prototype._onTextChatEntryCreated = function(entry) {
+    var nick = entry.get('nick');
     if (entry.get('type') == "inviteSent") {
       entry.set('type', "inviteReceived");
       entry.set('nick', entry.get('otherUser'));
     }
     this.webrtc.send(JSON.stringify(entry));
+    if (entry.get('type') == "inviteReceived") {
+      entry.set('type', "inviteSent");
+      entry.set('nick', nick);
+    }
   };
 
   return ChatApp;
