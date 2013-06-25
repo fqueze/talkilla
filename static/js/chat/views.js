@@ -242,6 +242,24 @@
   });
 
   /**
+   * When sending a game invitation.
+   */
+  app.views.TextChatInviteSentView = app.views.BaseTextChatEntryView.extend({
+    template: _.template([
+      '<span class="invite-block">You invited <strong><%= nick %></strong> to play.</span></div>'
+    ].join(''))
+  });
+
+  /**
+   * When receiving a game invitation.
+   */
+  app.views.TextChatInviteReceivedView = app.views.BaseTextChatEntryView.extend({
+    template: _.template([
+      '<span class="invite-block"><a href="<%= message %>" class="chat-link">Click here to start playing with <strong><%= nick %></strong></a></span></div>'
+    ].join(''))
+  });
+
+  /**
    * Text chat conversation view.
    */
   app.views.TextChatView = Backbone.View.extend({
@@ -249,7 +267,9 @@
 
     viewClasses: {
       text: app.views.TextChatTextEntryView,
-      url:  app.views.TextChatURLEntryView
+      url:  app.views.TextChatURLEntryView,
+      inviteSent: app.views.TextChatInviteSentView,
+      inviteReceived: app.views.TextChatInviteReceivedView
     },
 
     events: {
@@ -304,8 +324,10 @@
 
       this.collection.newEntry({
         nick: app.data.user.get("nick"),
+        otherUser: this.call.get('otherUser'),
         message: url,
-        type: "url"
+        // FIXME: 'localhost' needs to be changed to something more clever.
+        type: url.indexOf("localhost") != -1 ? "inviteSent" : "url"
       });
     },
 
