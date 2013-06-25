@@ -327,7 +327,7 @@
         otherUser: this.call.get('otherUser'),
         message: url,
         // FIXME: 'localhost' needs to be changed to something more clever.
-        type: url.indexOf("localhost") != -1 ? "inviteSent" : "url"
+        type: url.indexOf("talkilla-game-demo.herokuapp.com") != -1 ? "inviteSent" : "url"
       });
     },
 
