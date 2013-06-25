@@ -246,7 +246,7 @@
    */
   app.views.TextChatInviteSentView = app.views.BaseTextChatEntryView.extend({
     template: _.template([
-      '<span class="invite-block">You invited <strong><%= nick %></strong> to play.</span></div>'
+      '<span class="invite-block">You invited <strong><%= otherUser %></strong> to play.</span></div>'
     ].join(''))
   });
 
